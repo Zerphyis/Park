@@ -1,0 +1,36 @@
+package github.com.Zerphyis.park.aplication.spot;
+
+import github.com.Zerphyis.park.domain.spot.DataSpot;
+import github.com.Zerphyis.park.infra.spot.Spot;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/vaga")
+public class ControllerSpot {
+
+        @Autowired
+        private ServiceSpot service;
+
+        @PostMapping
+        public ResponseEntity<Spot> register(@RequestBody DataSpot data) {
+            Spot created = service.registerSpot(data);
+            return ResponseEntity.ok(created);
+        }
+
+        @GetMapping
+        public ResponseEntity<List<Spot>> listFreeSpots() {
+            List<Spot> freeSpots = service.listSpot();
+            return ResponseEntity.ok(freeSpots);
+        }
+
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+            service.deleteSpot(id);
+            return ResponseEntity.noContent().build();
+        }
+    }
+
