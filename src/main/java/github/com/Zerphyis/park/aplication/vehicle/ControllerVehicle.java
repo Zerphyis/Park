@@ -14,12 +14,12 @@ public class ControllerVehicle {
     ServiceVehicle service;
 
     @PostMapping
-    public Vehicle register(DataVehicle data){
+    public Vehicle register(@RequestBody DataVehicle data){
         return service.registerVehicle(data);
     }
 
     @PutMapping
-    public Vehicle update(Long id,DataVehicle data){
+    public Vehicle update(@RequestParam("id") Long id,@RequestBody DataVehicle data){
         return service.updateveihcle(id,data);
     }
 
@@ -29,7 +29,7 @@ public class ControllerVehicle {
     }
 
     @DeleteMapping
-    public void delete(Long id){
+    public void delete(@RequestParam("id")Long id){
         service.deleteVehicle(id);
     }
 }
