@@ -5,7 +5,9 @@ import github.com.Zerphyis.park.infra.spot.Spot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -16,9 +18,10 @@ public class ControllerSpot {
         private ServiceSpot service;
 
         @PostMapping
-        public ResponseEntity<Spot> register(@RequestBody DataSpot data) {
+        public ResponseEntity<Spot> register(@RequestBody DataSpot data, UriComponentsBuilder uriBuilder) {
             Spot created = service.registerSpot(data);
-            return ResponseEntity.ok(created);
+            URI uri = uriBuilder.path("/vaga/{id}").buildAndExpand(created.getId()).toUri();
+            return ResponseEntity.created(uri).body(created);
         }
 
         @GetMapping
