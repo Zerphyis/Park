@@ -29,6 +29,10 @@ public class Spot {
 
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Integer getNumberPark() {
         return numberPark;
     }
