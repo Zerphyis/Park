@@ -15,9 +15,11 @@ public class Vehicle {
 
     @NotBlank(message = "Deve ser informado uma placa de carro")
     @Size(max = 9, message = "A placa do carro deve ter no máximo 9 caracteres")
+    @Column(name = "placa_carro")
     private String carPlate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_cliente")
     private TypeClient typeClient;
 
 
