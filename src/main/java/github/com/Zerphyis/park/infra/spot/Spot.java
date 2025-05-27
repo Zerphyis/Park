@@ -14,8 +14,10 @@ public class Spot {
     private Long id;
 
     @NotBlank(message ="número da vaga deve estar preenchido")
+    @Column(name = "numero_vaga")
     private Integer numberPark;
     @Enumerated(EnumType.STRING)
+    @Column(name = "estado_vaga")
     private TypeSpot typeSpot;
 
     public Spot(){
