@@ -29,6 +29,9 @@ public class Vehicle {
         this.typeClient=data.typeClient();
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public String getCarPlate() {
         return carPlate;
