@@ -1,6 +1,7 @@
 package github.com.Zerphyis.park.aplication.spot;
 
 import github.com.Zerphyis.park.domain.spot.DataSpot;
+import github.com.Zerphyis.park.domain.spot.ResponseDataSpot;
 import github.com.Zerphyis.park.infra.spot.Spot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,18 @@ public class ControllerSpot {
         private ServiceSpot service;
 
         @PostMapping
-        public ResponseEntity<Spot> register(@RequestBody DataSpot data, UriComponentsBuilder uriBuilder) {
+        public ResponseEntity<ResponseDataSpot> register(@RequestBody DataSpot data, UriComponentsBuilder uriBuilder) {
             Spot created = service.registerSpot(data);
             URI uri = uriBuilder.path("/vaga/{id}").buildAndExpand(created.getId()).toUri();
-            return ResponseEntity.created(uri).body(created);
+            return ResponseEntity.created(uri).body(toResponse(created));
         }
 
         @GetMapping
-        public ResponseEntity<List<Spot>> listFreeSpots() {
-            List<Spot> freeSpots = service.listSpot();
+        public ResponseEntity<List<ResponseDataSpot>> listFreeSpots() {
+            List<ResponseDataSpot> freeSpots = service.listSpot()
+                    .stream()
+                    .map(this::toResponse)
+                    .toList();
             return ResponseEntity.ok(freeSpots);
         }
 
@@ -35,5 +39,10 @@ public class ControllerSpot {
             service.deleteSpot(id);
             return ResponseEntity.noContent().build();
         }
+
+    private ResponseDataSpot toResponse(Spot s) {
+        return new ResponseDataSpot(s.getNumberPark(),s.getTypeSpot());
     }
+
+}
 
