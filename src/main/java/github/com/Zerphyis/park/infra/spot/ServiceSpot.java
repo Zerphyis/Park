@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ServiceSpot {
     @Autowired
-    RepositorySpot repository;
+   private RepositorySpot repository;
 
     @Transactional
     public Spot registerSpot(DataSpot data){
