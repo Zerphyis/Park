@@ -1,7 +1,7 @@
-package github.com.Zerphyis.park.infra.vehicle;
+package github.com.Zerphyis.park.domain.vehicle;
 
-import github.com.Zerphyis.park.domain.vehicle.DataVehicle;
-import github.com.Zerphyis.park.domain.vehicle.TypeClient;
+import github.com.Zerphyis.park.application.vehicle.DataVehicle;
+import github.com.Zerphyis.park.application.vehicle.TypeClient;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

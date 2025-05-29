@@ -1,8 +1,8 @@
-package github.com.Zerphyis.park.infra.entry;
+package github.com.Zerphyis.park.domain.entry;
 
-import github.com.Zerphyis.park.domain.entry.DataEntry;
-import github.com.Zerphyis.park.infra.spot.Spot;
-import github.com.Zerphyis.park.infra.vehicle.Vehicle;
+import github.com.Zerphyis.park.application.entry.DataEntry;
+import github.com.Zerphyis.park.domain.spot.Spot;
+import github.com.Zerphyis.park.domain.vehicle.Vehicle;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

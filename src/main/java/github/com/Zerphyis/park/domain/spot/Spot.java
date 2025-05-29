@@ -1,8 +1,8 @@
-package github.com.Zerphyis.park.infra.spot;
+package github.com.Zerphyis.park.domain.spot;
 
 
-import github.com.Zerphyis.park.domain.spot.DataSpot;
-import github.com.Zerphyis.park.domain.spot.TypeSpot;
+import github.com.Zerphyis.park.application.spot.DataSpot;
+import github.com.Zerphyis.park.application.spot.TypeSpot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,6 +1,6 @@
-package github.com.Zerphyis.park.infra.spot;
+package github.com.Zerphyis.park.domain.spot;
 
-import github.com.Zerphyis.park.domain.spot.TypeSpot;
+import github.com.Zerphyis.park.application.spot.TypeSpot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
