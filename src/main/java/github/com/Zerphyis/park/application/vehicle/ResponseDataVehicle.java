@@ -1,4 +1,4 @@
-package github.com.Zerphyis.park.domain.vehicle;
+package github.com.Zerphyis.park.application.vehicle;
 
 public record ResponseDataVehicle(String carPlate, TypeClient typeClient) {
 }

@@ -1,4 +1,4 @@
-package github.com.Zerphyis.park.domain.entry;
+package github.com.Zerphyis.park.application.entry;
 
 import java.time.LocalDateTime;
 
