@@ -30,7 +30,7 @@ public class ServiceExit {
         Entry entry = repoEntry.findById(request.entryId())
                 .orElseThrow(() -> new EntryNotFound("Entrada não encontrada com id: " + request.entryId()));
 
-        if (repoExit.existsByEntry(entry.getId())) {
+        if (repoExit.existsByEntry_Id(entry.getId())) {
             throw new ExitAlreadyExist("Já existe uma saída para esta entrada.");
         }
 
