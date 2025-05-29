@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/entrada")
 public class ControllerEntry {
     @Autowired
-    ServiceEntry service;
+   private ServiceEntry service;
 
     @PostMapping
     public ResponseEntity<DataEntryResponse> createEntry(@RequestBody DataEntryRequest request) {
