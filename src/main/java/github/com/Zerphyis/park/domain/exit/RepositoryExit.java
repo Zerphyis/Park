@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RepositoryExit extends JpaRepository<Exit,Long> {
-    boolean existsByEntry(Long entryid);
+    boolean existsByEntry_Id(Long entryId);;
 }
