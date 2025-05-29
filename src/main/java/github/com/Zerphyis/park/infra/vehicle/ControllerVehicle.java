@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/veiculos")
 public class ControllerVehicle {
     @Autowired
-    ServiceVehicle service;
+   private ServiceVehicle service;
 
     @PostMapping
     public ResponseEntity<ResponseDataVehicle> register(@RequestBody DataVehicle data, UriComponentsBuilder uriBuilder) {
