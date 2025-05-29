@@ -31,7 +31,7 @@ public class Entry {
     public Entry(DataEntry entry) {
         this.spot = entry.spot();
         this.vehicle = entry.vehicle();
-        this.entryDateTime = entry.entryDateTime();
+        this.entryDateTime =LocalDateTime.now();
     }
 
     public Long getId() {
