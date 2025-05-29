@@ -3,8 +3,12 @@ package github.com.Zerphyis.park.domain.spot;
 
 import github.com.Zerphyis.park.application.spot.DataSpot;
 import github.com.Zerphyis.park.application.spot.TypeSpot;
+import github.com.Zerphyis.park.domain.entry.Entry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name ="vaga" )
@@ -19,6 +23,9 @@ public class Spot {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_vaga")
     private TypeSpot typeSpot;
+
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
+    private List<Entry> entries = new ArrayList<>();
 
     public Spot(){
 
