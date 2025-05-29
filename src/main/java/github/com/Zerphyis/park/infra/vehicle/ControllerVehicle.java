@@ -1,8 +1,8 @@
-package github.com.Zerphyis.park.aplication.vehicle;
+package github.com.Zerphyis.park.infra.vehicle;
 
-import github.com.Zerphyis.park.domain.vehicle.DataVehicle;
-import github.com.Zerphyis.park.domain.vehicle.ResponseDataVehicle;
-import github.com.Zerphyis.park.infra.vehicle.Vehicle;
+import github.com.Zerphyis.park.application.vehicle.DataVehicle;
+import github.com.Zerphyis.park.application.vehicle.ResponseDataVehicle;
+import github.com.Zerphyis.park.domain.vehicle.Vehicle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

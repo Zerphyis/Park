@@ -1,8 +1,8 @@
-package github.com.Zerphyis.park.aplication.spot;
+package github.com.Zerphyis.park.infra.spot;
 
-import github.com.Zerphyis.park.domain.spot.DataSpot;
-import github.com.Zerphyis.park.domain.spot.ResponseDataSpot;
-import github.com.Zerphyis.park.infra.spot.Spot;
+import github.com.Zerphyis.park.application.spot.DataSpot;
+import github.com.Zerphyis.park.application.spot.ResponseDataSpot;
+import github.com.Zerphyis.park.domain.spot.Spot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

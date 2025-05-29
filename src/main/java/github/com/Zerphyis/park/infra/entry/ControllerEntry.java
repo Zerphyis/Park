@@ -1,7 +1,7 @@
-package github.com.Zerphyis.park.aplication.entry;
+package github.com.Zerphyis.park.infra.entry;
 
-import github.com.Zerphyis.park.domain.entry.DataEntryRequest;
-import github.com.Zerphyis.park.domain.entry.DataEntryResponse;
+import github.com.Zerphyis.park.application.entry.DataEntryRequest;
+import github.com.Zerphyis.park.application.entry.DataEntryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
