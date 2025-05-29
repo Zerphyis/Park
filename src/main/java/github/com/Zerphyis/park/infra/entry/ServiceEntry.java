@@ -51,7 +51,7 @@ public class ServiceEntry {
         Vehicle vehicle = repoVehi.findById(request.vehicleId())
                 .orElseThrow(() -> new VehicleNotFound("Veiculo não encontrado com id " + request.vehicleId()));
 
-        DataEntry dataEntry = new DataEntry(spot, vehicle, request.dateTime());
+        DataEntry dataEntry = new DataEntry(spot, vehicle);
         Entry entry = new Entry(dataEntry);
 
         Entry savedEntry = repoEntry.save(entry);
