@@ -21,11 +21,11 @@ import java.util.List;
 @Service
 public class ServiceEntry {
     @Autowired
-    RepositoryEntry repoEntry;
+    private   RepositoryEntry repoEntry;
     @Autowired
-    RepositorySpot repoSpot;
+    private RepositorySpot repoSpot;
     @Autowired
-    RepositoryVehicle repoVehi;
+    private RepositoryVehicle repoVehi;
 
 
     private boolean isSpotInUse(Long spotId) {
