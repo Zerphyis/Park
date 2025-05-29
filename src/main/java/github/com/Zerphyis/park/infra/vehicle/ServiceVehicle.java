@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class ServiceVehicle {
     @Autowired
-    RepositoryVehicle repository;
+    private RepositoryVehicle repository;
 
     @Transactional
     public Vehicle registerVehicle(DataVehicle data){
