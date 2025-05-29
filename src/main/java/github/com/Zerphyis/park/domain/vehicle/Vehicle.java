@@ -2,9 +2,13 @@ package github.com.Zerphyis.park.domain.vehicle;
 
 import github.com.Zerphyis.park.application.vehicle.DataVehicle;
 import github.com.Zerphyis.park.application.vehicle.TypeClient;
+import github.com.Zerphyis.park.domain.entry.Entry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "veiculos")
@@ -22,6 +26,8 @@ public class Vehicle {
     @Column(name = "tipo_cliente")
     private TypeClient typeClient;
 
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    private List<Entry> entries = new ArrayList<>();
 
     public Vehicle(){
 
