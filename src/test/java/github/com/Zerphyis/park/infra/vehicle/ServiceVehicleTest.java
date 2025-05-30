@@ -1,6 +1,6 @@
 package github.com.Zerphyis.park.infra.vehicle;
 
-import github.com.Zerphyis.park.application.VehicleNotFound;
+import github.com.Zerphyis.park.application.exceptions.VehicleNotFound;
 import github.com.Zerphyis.park.application.vehicle.DataVehicle;
 import github.com.Zerphyis.park.domain.vehicle.RepositoryVehicle;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
