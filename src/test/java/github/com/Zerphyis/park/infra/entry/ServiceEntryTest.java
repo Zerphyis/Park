@@ -1,5 +1,6 @@
 package github.com.Zerphyis.park.infra.entry;
 
+import github.com.Zerphyis.park.application.EntryNotFound;
 import github.com.Zerphyis.park.application.SpotNotFound;
 import github.com.Zerphyis.park.application.VehicleNotFound;
 import github.com.Zerphyis.park.application.entry.DataEntry;
@@ -13,6 +14,7 @@ import github.com.Zerphyis.park.domain.spot.RepositorySpot;
 import github.com.Zerphyis.park.domain.spot.Spot;
 import github.com.Zerphyis.park.domain.vehicle.RepositoryVehicle;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -101,5 +104,57 @@ class ServiceEntryTest {
         assertThrows(VehicleNotFound.class, () -> service.createEntry(request));
     }
 
+    @Test
+    void shouldThrowExceptionWhenSpotNotFoundInDB() {
+        when(repoEntry.existsBySpotId(anyLong())).thenReturn(false);
+        when(repoEntry.existsByVehicleId(anyLong())).thenReturn(false);
+        when(repoSpot.findById(anyLong())).thenReturn(Optional.empty());
 
+        DataEntryRequest request = new DataEntryRequest(1L, 2L);
+
+        assertThrows(SpotNotFound.class, () -> service.createEntry(request));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenVehicleNotFoundInDB() {
+        Spot spot = mockSpot();
+
+        when(repoEntry.existsBySpotId(anyLong())).thenReturn(false);
+        when(repoEntry.existsByVehicleId(anyLong())).thenReturn(false);
+        when(repoSpot.findById(anyLong())).thenReturn(Optional.of(spot));
+        when(repoVehicle.findById(anyLong())).thenReturn(Optional.empty());
+
+        DataEntryRequest request = new DataEntryRequest(1L, 2L);
+
+        assertThrows(VehicleNotFound.class, () -> service.createEntry(request));
+    }
+
+    @Test
+    void shouldListAllEntriesSuccessfully() {
+        Spot spot = mockSpot();
+        Vehicle vehicle = mockVehicle();
+        DataEntry dataEntry = new DataEntry(spot, vehicle);
+        Entry entry = new Entry(dataEntry);
+
+        when(repoEntry.findAll()).thenReturn(List.of(entry));
+
+        List<DataEntryResponse> responses = service.listAllEntries();
+
+        assertEquals(1, responses.size());
+        assertEquals("ABC-1234", responses.get(0).carPlate());
+    }
+    @Test
+    void shouldDeleteEntrySuccessfully() {
+        when(repoEntry.existsById(1L)).thenReturn(true);
+
+        assertDoesNotThrow(() -> service.deleteEntry(1L));
+        verify(repoEntry).deleteById(1L);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenEntryToDeleteNotFound() {
+        when(repoEntry.existsById(1L)).thenReturn(false);
+
+        assertThrows(EntryNotFound.class, () -> service.deleteEntry(1L));
+    }
 }
