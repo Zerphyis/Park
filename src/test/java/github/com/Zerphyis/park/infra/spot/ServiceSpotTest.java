@@ -1,7 +1,7 @@
 package github.com.Zerphyis.park.infra.spot;
 
 import static org.junit.jupiter.api.Assertions.*;
-import github.com.Zerphyis.park.application.SpotNotFound;
+import github.com.Zerphyis.park.application.exceptions.SpotNotFound;
 import github.com.Zerphyis.park.application.spot.DataSpot;
 import github.com.Zerphyis.park.application.spot.TypeSpot;
 import github.com.Zerphyis.park.domain.spot.RepositorySpot;
@@ -13,7 +13,7 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.Mockito.*;
 
 
