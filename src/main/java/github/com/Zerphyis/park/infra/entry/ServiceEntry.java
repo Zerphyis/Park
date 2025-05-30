@@ -1,8 +1,8 @@
 package github.com.Zerphyis.park.infra.entry;
 
-import github.com.Zerphyis.park.application.EntryNotFound;
-import github.com.Zerphyis.park.application.SpotNotFound;
-import github.com.Zerphyis.park.application.VehicleNotFound;
+import github.com.Zerphyis.park.application.exceptions.EntryNotFound;
+import github.com.Zerphyis.park.application.exceptions.SpotNotFound;
+import github.com.Zerphyis.park.application.exceptions.VehicleNotFound;
 import github.com.Zerphyis.park.application.entry.DataEntry;
 import github.com.Zerphyis.park.application.entry.DataEntryRequest;
 import github.com.Zerphyis.park.application.entry.DataEntryResponse;
