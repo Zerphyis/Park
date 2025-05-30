@@ -1,4 +1,4 @@
-package github.com.Zerphyis.park.application;
+package github.com.Zerphyis.park.application.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
