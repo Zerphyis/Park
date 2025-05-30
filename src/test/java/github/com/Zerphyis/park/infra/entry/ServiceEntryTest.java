@@ -1,6 +1,7 @@
 package github.com.Zerphyis.park.infra.entry;
 
-
+import github.com.Zerphyis.park.application.SpotNotFound;
+import github.com.Zerphyis.park.application.VehicleNotFound;
 import github.com.Zerphyis.park.application.entry.DataEntry;
 import github.com.Zerphyis.park.application.entry.DataEntryRequest;
 import github.com.Zerphyis.park.application.entry.DataEntryResponse;
@@ -12,7 +13,6 @@ import github.com.Zerphyis.park.domain.spot.RepositorySpot;
 import github.com.Zerphyis.park.domain.spot.Spot;
 import github.com.Zerphyis.park.domain.vehicle.RepositoryVehicle;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,12 +20,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -82,4 +81,25 @@ class ServiceEntryTest {
         assertEquals(42, response.numberPark());
         assertEquals(now, response.entryDateTime());
     }
+
+    @Test
+    void shouldThrowExceptionWhenSpotAlreadyInUse() {
+        when(repoEntry.existsBySpotId(anyLong())).thenReturn(true);
+
+        DataEntryRequest request = new DataEntryRequest(1L, 2L);
+
+        assertThrows(SpotNotFound.class, () -> service.createEntry(request));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenVehicleAlreadyInUse() {
+        when(repoEntry.existsBySpotId(anyLong())).thenReturn(false);
+        when(repoEntry.existsByVehicleId(anyLong())).thenReturn(true);
+
+        DataEntryRequest request = new DataEntryRequest(1L, 2L);
+
+        assertThrows(VehicleNotFound.class, () -> service.createEntry(request));
+    }
+
+
 }
