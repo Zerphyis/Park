@@ -65,4 +65,19 @@ class ControllerEntryTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void shouldListAllEntriesSuccessfully() throws Exception {
+        List<DataEntryResponse> responses = List.of(
+                new DataEntryResponse("XYZ-9999", 101, LocalDateTime.of(2024, 5, 30, 12, 0))
+        );
+
+        when(service.listAllEntries()).thenReturn(responses);
+
+        mockMvc.perform(get("/entrada"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].carPlate").value("XYZ-9999"))
+                .andExpect(jsonPath("$[0].numberPark").value(101));
+    }
+
 }
