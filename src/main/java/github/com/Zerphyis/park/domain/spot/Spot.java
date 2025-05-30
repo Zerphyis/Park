@@ -6,6 +6,7 @@ import github.com.Zerphyis.park.application.spot.TypeSpot;
 import github.com.Zerphyis.park.domain.entry.Entry;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Spot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message ="número da vaga deve estar preenchido")
+    @NotNull(message ="número da vaga deve estar preenchido")
     @Column(name = "numero_vaga")
     private Integer numberPark;
     @Enumerated(EnumType.STRING)
