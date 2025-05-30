@@ -1,8 +1,8 @@
 package github.com.Zerphyis.park.infra.entry;
 
-import github.com.Zerphyis.park.application.EntryNotFound;
-import github.com.Zerphyis.park.application.SpotNotFound;
-import github.com.Zerphyis.park.application.VehicleNotFound;
+import github.com.Zerphyis.park.application.exceptions.EntryNotFound;
+import github.com.Zerphyis.park.application.exceptions.SpotNotFound;
+import github.com.Zerphyis.park.application.exceptions.VehicleNotFound;
 import github.com.Zerphyis.park.application.entry.DataEntry;
 import github.com.Zerphyis.park.application.entry.DataEntryRequest;
 import github.com.Zerphyis.park.application.entry.DataEntryResponse;
@@ -14,7 +14,6 @@ import github.com.Zerphyis.park.domain.spot.RepositorySpot;
 import github.com.Zerphyis.park.domain.spot.Spot;
 import github.com.Zerphyis.park.domain.vehicle.RepositoryVehicle;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
