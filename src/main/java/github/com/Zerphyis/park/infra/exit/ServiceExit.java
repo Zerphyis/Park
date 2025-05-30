@@ -1,7 +1,7 @@
 package github.com.Zerphyis.park.infra.exit;
 
-import github.com.Zerphyis.park.application.EntryNotFound;
-import github.com.Zerphyis.park.application.ExitAlreadyExist;
+import github.com.Zerphyis.park.application.exceptions.EntryNotFound;
+import github.com.Zerphyis.park.application.exceptions.ExitAlreadyExist;
 import github.com.Zerphyis.park.application.exit.DataExit;
 import github.com.Zerphyis.park.application.exit.DataExitRequest;
 import github.com.Zerphyis.park.application.exit.DataExitResponse;
