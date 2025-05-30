@@ -2,6 +2,7 @@ package github.com.Zerphyis.park.infra.spot;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import github.com.Zerphyis.park.application.exceptions.SpotNotFound;
 import github.com.Zerphyis.park.application.spot.DataSpot;
 import github.com.Zerphyis.park.application.spot.ResponseDataSpot;
 import github.com.Zerphyis.park.application.spot.TypeSpot;
@@ -93,11 +94,11 @@ class ControllerSpotTest {
 
     @Test
     void delete_sadPath_throwsSpotNotFound() {
-        doThrow(new github.com.Zerphyis.park.application.SpotNotFound("Vaga com id 1 não encontrado."))
+        doThrow(new SpotNotFound("Vaga com id 1 não encontrado."))
                 .when(service).deleteSpot(1L);
 
-        github.com.Zerphyis.park.application.SpotNotFound ex = assertThrows(
-                github.com.Zerphyis.park.application.SpotNotFound.class,
+        SpotNotFound ex = assertThrows(
+                SpotNotFound.class,
                 () -> controller.delete(1L));
 
         assertEquals("Vaga com id 1 não encontrado.", ex.getMessage());
