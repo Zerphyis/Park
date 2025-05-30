@@ -1,15 +1,12 @@
 package github.com.Zerphyis.park.infra.entry;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import github.com.Zerphyis.park.application.SpotNotFound;
-import github.com.Zerphyis.park.application.EntryNotFound;
+import github.com.Zerphyis.park.application.exceptions.SpotNotFound;
+import github.com.Zerphyis.park.application.exceptions.EntryNotFound;
 import github.com.Zerphyis.park.application.entry.DataEntryRequest;
 import github.com.Zerphyis.park.application.entry.DataEntryResponse;
-import github.com.Zerphyis.park.infra.entry.ControllerEntry;
-import github.com.Zerphyis.park.infra.entry.ServiceEntry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
