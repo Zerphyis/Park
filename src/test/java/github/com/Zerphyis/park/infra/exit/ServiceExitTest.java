@@ -15,6 +15,8 @@ import github.com.Zerphyis.park.application.exceptions.ExitAlreadyExist;
 import github.com.Zerphyis.park.domain.exit.Exit;
 import org.mockito.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -91,5 +93,42 @@ class ServiceExitTest {
         assertEquals("Já existe uma saída para esta entrada.", exception.getMessage());
         verify(repoExit, never()).save(any());
     }
+
+    @Test
+    void listAllExits_Success() {
+        Exit mockExit = mock(Exit.class);
+        Entry mockEntry = mock(Entry.class);
+        var mockSpot = mock(github.com.Zerphyis.park.domain.spot.Spot.class);
+        var mockVehicle = mock(github.com.Zerphyis.park.domain.vehicle.Vehicle.class);
+
+        when(mockSpot.getNumberPark()).thenReturn(10);
+        when(mockVehicle.getCarPlate()).thenReturn("ABC-9999");
+        when(mockEntry.getSpot()).thenReturn(mockSpot);
+        when(mockEntry.getVehicle()).thenReturn(mockVehicle);
+        when(mockExit.getEntry()).thenReturn(mockEntry);
+        when(mockExit.getExitDateTime()).thenReturn(LocalDateTime.now());
+        when(mockExit.getValueCharged()).thenReturn(20.0);
+
+        when(repoExit.findAll()).thenReturn(List.of(mockExit));
+
+        List<DataExitResponse> list = service.listAllExits();
+
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals(10, list.get(0).numberPark());
+        assertEquals("ABC-9999", list.get(0).carPlate());
+        assertTrue(list.get(0).valueCharged() > 0);
+    }
+
+    @Test
+    void listAllExits_EmptyList() {
+        when(repoExit.findAll()).thenReturn(Collections.emptyList());
+
+        List<DataExitResponse> list = service.listAllExits();
+
+        assertNotNull(list);
+        assertTrue(list.isEmpty());
+    }
+
 
 }
