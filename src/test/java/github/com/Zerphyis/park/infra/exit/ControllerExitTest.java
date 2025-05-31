@@ -4,7 +4,6 @@ import github.com.Zerphyis.park.application.exit.DataExitRequest;
 import github.com.Zerphyis.park.application.exit.DataExitResponse;
 import github.com.Zerphyis.park.application.exceptions.EntryNotFound;
 import github.com.Zerphyis.park.application.exceptions.ExitAlreadyExist;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -104,5 +102,24 @@ class ControllerExitTest {
         verify(serviceExit, times(1)).listAllExits();
     }
 
+    @Test
+    void deleteExit_Success() throws Exception {
+        doNothing().when(serviceExit).deleteExit(1L);
 
+        mockMvc.perform(delete(baseUrl + "/1"))
+                .andExpect(status().isNoContent());
+
+        verify(serviceExit, times(1)).deleteExit(1L);
+    }
+
+    @Test
+    void deleteExit_NotFound() throws Exception {
+        doThrow(new RuntimeException("Saída com ID 1 não encontrada.")).when(serviceExit).deleteExit(1L);
+
+        mockMvc.perform(delete(baseUrl + "/1"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().string("Erro interno: Saída com ID 1 não encontrada."));
+
+        verify(serviceExit, times(1)).deleteExit(1L);
+    }
 }
