@@ -130,5 +130,27 @@ class ServiceExitTest {
         assertTrue(list.isEmpty());
     }
 
+    @Test
+    void deleteExit_Success() {
+        Long exitId = 5L;
+        when(repoExit.existsById(exitId)).thenReturn(true);
+
+        service.deleteExit(exitId);
+
+        verify(repoExit, times(1)).deleteById(exitId);
+    }
+
+    @Test
+    void deleteExit_NotFound() {
+        Long exitId = 6L;
+        when(repoExit.existsById(exitId)).thenReturn(false);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            service.deleteExit(exitId);
+        });
+
+        assertEquals("Saída com ID " + exitId + " não encontrada.", exception.getMessage());
+        verify(repoExit, never()).deleteById(anyLong());
+    }
 
 }
