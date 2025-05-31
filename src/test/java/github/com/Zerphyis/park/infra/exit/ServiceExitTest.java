@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import github.com.Zerphyis.park.application.exceptions.EntryNotFound;
+import github.com.Zerphyis.park.application.exceptions.ExitAlreadyExist;
 import github.com.Zerphyis.park.domain.exit.Exit;
 import org.mockito.*;
 import java.time.LocalDateTime;
@@ -72,6 +73,22 @@ class ServiceExitTest {
         });
 
         assertEquals("Entrada não encontrada com id: " + entryId, exception.getMessage());
+        verify(repoExit, never()).save(any());
+    }
+
+    @Test
+    void registerExit_ExitAlreadyExist() {
+        Long entryId = 3L;
+        Entry mockEntry = mock(Entry.class);
+        when(mockEntry.getId()).thenReturn(entryId);
+        when(repoEntry.findById(entryId)).thenReturn(Optional.of(mockEntry));
+        when(repoExit.existsByEntry_Id(entryId)).thenReturn(true);
+
+        ExitAlreadyExist exception = assertThrows(ExitAlreadyExist.class, () -> {
+            service.registerExit(new DataExitRequest(entryId));
+        });
+
+        assertEquals("Já existe uma saída para esta entrada.", exception.getMessage());
         verify(repoExit, never()).save(any());
     }
 
