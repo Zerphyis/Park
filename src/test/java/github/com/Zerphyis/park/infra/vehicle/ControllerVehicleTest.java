@@ -106,4 +106,26 @@ class ControllerVehicleTest {
     }
 
 
+    @Test
+    void delete_success() throws Exception {
+        Long id = 1L;
+
+        mockMvc.perform(delete("/veiculos?id=" + id))
+                .andExpect(status().isNoContent());
+
+        Mockito.verify(service).deleteVehicle(id);
+    }
+
+    @Test
+    void delete_notFound() throws Exception {
+        Long id = 77L;
+
+        Mockito.doThrow(new VehicleNotFound("Veículo não encontrado"))
+                .when(service).deleteVehicle(id);
+
+        mockMvc.perform(delete("/veiculos?id=" + id))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("Veículo não encontrado")));
+    }
+
 }
