@@ -27,4 +27,11 @@ public class GlobalException {
     public ResponseEntity<String> handleExitAlreadyExist(ExitAlreadyExist ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleGenericException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Erro interno: " + ex.getMessage());
+    }
+
 }
