@@ -11,9 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -56,6 +56,18 @@ class ControllerVehicleTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalid)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void list_success() throws Exception {
+        Vehicle vehicle = new Vehicle(new DataVehicle("DEF5678", TypeClient.MENSALISTA));
+        vehicle.setCarPlate("DEF5678");
+
+        Mockito.when(service.listVehicle()).thenReturn(List.of(vehicle));
+
+        mockMvc.perform(get("/veiculos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].carPlate").value("DEF5678"));
     }
 
 }
