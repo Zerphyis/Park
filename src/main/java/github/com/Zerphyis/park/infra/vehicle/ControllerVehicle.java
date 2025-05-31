@@ -3,6 +3,7 @@ package github.com.Zerphyis.park.infra.vehicle;
 import github.com.Zerphyis.park.application.vehicle.DataVehicle;
 import github.com.Zerphyis.park.application.vehicle.ResponseDataVehicle;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class ControllerVehicle {
    private ServiceVehicle service;
 
     @PostMapping
-    public ResponseEntity<ResponseDataVehicle> register(@RequestBody DataVehicle data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ResponseDataVehicle> register(@RequestBody @Valid DataVehicle data, UriComponentsBuilder uriBuilder) {
         Vehicle created = service.registerVehicle(data);
         URI uri = uriBuilder.path("/veiculos/{id}").buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uri).body(toResponse(created));
