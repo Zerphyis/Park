@@ -1,5 +1,6 @@
 package github.com.Zerphyis.park.infra.vehicle;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import github.com.Zerphyis.park.application.exceptions.VehicleNotFound;
 import github.com.Zerphyis.park.application.vehicle.DataVehicle;
 import github.com.Zerphyis.park.application.vehicle.TypeClient;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
@@ -13,7 +14,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -69,5 +72,38 @@ class ControllerVehicleTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].carPlate").value("DEF5678"));
     }
+
+
+    @Test
+    void update_success() throws Exception {
+        Long id = 1L;
+        DataVehicle data = new DataVehicle("XYZ9999", TypeClient.HORISTA);
+        Vehicle updated = new Vehicle(data);
+        updated.setCarPlate("XYZ9999");
+
+        Mockito.when(service.updateveihcle(eq(id), any(DataVehicle.class))).thenReturn(updated);
+
+        mockMvc.perform(put("/veiculos?id=" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(data)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.carPlate").value("XYZ9999"));
+    }
+
+    @Test
+    void update_notFound() throws Exception {
+        Long id = 99L;
+        DataVehicle data = new DataVehicle("NOTFOUND", TypeClient.HORISTA);
+
+        Mockito.when(service.updateveihcle(eq(id), any(DataVehicle.class)))
+                .thenThrow(new VehicleNotFound("Veículo não encontrado"));
+
+        mockMvc.perform(put("/veiculos?id=" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(data)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("Veículo não encontrado")));
+    }
+
 
 }
