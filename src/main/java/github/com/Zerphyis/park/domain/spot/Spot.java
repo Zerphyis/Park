@@ -5,7 +5,6 @@ import github.com.Zerphyis.park.application.spot.DataSpot;
 import github.com.Zerphyis.park.application.spot.TypeSpot;
 import github.com.Zerphyis.park.domain.entry.Entry;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
