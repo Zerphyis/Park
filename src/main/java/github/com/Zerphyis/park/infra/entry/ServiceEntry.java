@@ -21,12 +21,13 @@ import java.util.List;
 @Service
 public class ServiceEntry {
     @Autowired
-    private   RepositoryEntry repoEntry;
+    private RepositoryEntry repoEntry;
+
     @Autowired
     private RepositorySpot repoSpot;
+
     @Autowired
     private RepositoryVehicle repoVehi;
-
 
     private boolean isSpotInUse(Long spotId) {
         return repoEntry.existsBySpotId(spotId);
@@ -42,14 +43,14 @@ public class ServiceEntry {
             throw new SpotNotFound("Vaga já está ocupada: " + request.spotId());
         }
         if (isVehicleInUse(request.vehicleId())) {
-            throw new VehicleNotFound("Veiculo já esta em uso:" + request.vehicleId());
+            throw new VehicleNotFound("Veículo já está em uso: " + request.vehicleId());
         }
 
         Spot spot = repoSpot.findById(request.spotId())
                 .orElseThrow(() -> new SpotNotFound("Vaga não encontrada com id " + request.spotId()));
 
         Vehicle vehicle = repoVehi.findById(request.vehicleId())
-                .orElseThrow(() -> new VehicleNotFound("Veiculo não encontrado com id " + request.vehicleId()));
+                .orElseThrow(() -> new VehicleNotFound("Veículo não encontrado com id " + request.vehicleId()));
 
         DataEntry dataEntry = new DataEntry(spot, vehicle);
         Entry entry = new Entry(dataEntry);
@@ -78,7 +79,7 @@ public class ServiceEntry {
     @Transactional
     public void deleteEntry(Long entryId) {
         if (!repoEntry.existsById(entryId)) {
-            throw new EntryNotFound("Entrada com o Id não encontrada " + entryId);
+            throw new EntryNotFound("Entrada com o Id não encontrada: " + entryId);
         }
         repoEntry.deleteById(entryId);
     }
