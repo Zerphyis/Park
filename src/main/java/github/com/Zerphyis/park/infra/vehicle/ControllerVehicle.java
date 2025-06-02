@@ -27,7 +27,7 @@ public class ControllerVehicle {
 
     @PutMapping
     public ResponseEntity<ResponseDataVehicle> update(@RequestParam("id") Long id, @RequestBody DataVehicle data){
-        Vehicle updated = service.updateveihcle(id, data);
+        Vehicle updated = service.updateVehicle(id, data);
         return ResponseEntity.ok(toResponse(updated));
     }
 
