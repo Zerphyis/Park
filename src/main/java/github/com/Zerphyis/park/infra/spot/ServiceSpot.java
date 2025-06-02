@@ -14,20 +14,20 @@ import java.util.List;
 @Service
 public class ServiceSpot {
     @Autowired
-   private RepositorySpot repository;
+    private RepositorySpot repository;
 
     @Transactional
-    public Spot registerSpot(DataSpot data){
+    public Spot registerSpot(DataSpot data) {
         if (repository.existsByNumberPark(data.numberPark())) {
             throw new IllegalArgumentException("Já existe uma vaga com o número " + data.numberPark());
         }
 
         var newSpot = new Spot(data);
-        return  repository.save(newSpot);
+        return repository.save(newSpot);
     }
 
     @Transactional(readOnly = true)
-    public List<Spot> listSpot(){
+    public List<Spot> listSpot() {
         return repository.findByTypeSpot(TypeSpot.LIVRE);
     }
 
