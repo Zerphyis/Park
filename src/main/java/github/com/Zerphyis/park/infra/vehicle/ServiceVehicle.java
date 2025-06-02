@@ -18,7 +18,7 @@ public class ServiceVehicle {
     @Transactional
     public Vehicle registerVehicle(DataVehicle data){
         var newVehicle= new Vehicle(data);
-       return repository.save(newVehicle);
+        return repository.save(newVehicle);
     }
 
     @Transactional(readOnly = true)
@@ -27,7 +27,7 @@ public class ServiceVehicle {
     }
 
     @Transactional
-    public Vehicle updateveihcle(Long id,DataVehicle data){
+    public Vehicle updateVehicle(Long id, DataVehicle data){
         var vehicle = repository.findById(id)
                 .orElseThrow(() -> new VehicleNotFound("Veículo com id " + id + " não encontrado."));
 
@@ -43,4 +43,5 @@ public class ServiceVehicle {
         }
         repository.deleteById(id);
     }
+
 }
