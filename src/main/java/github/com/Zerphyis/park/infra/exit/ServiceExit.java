@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class ServiceExit {
 
+
     @Autowired
     private RepositoryExit repoExit;
 
@@ -63,7 +64,7 @@ public class ServiceExit {
     @Transactional
     public void deleteExit(Long id) {
         if (!repoExit.existsById(id)) {
-            throw new RuntimeException("Saída com ID " + id + " não encontrada.");
+            throw new EntryNotFound("Saída com ID " + id + " não encontrada.");
         }
         repoExit.deleteById(id);
     }
