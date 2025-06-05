@@ -3,6 +3,7 @@ package github.com.Zerphyis.park.domain.vehicle;
 import github.com.Zerphyis.park.application.vehicle.DataVehicle;
 import github.com.Zerphyis.park.application.vehicle.TypeClient;
 import github.com.Zerphyis.park.domain.entry.Entry;
+import github.com.Zerphyis.park.domain.subscription.Subscription;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -28,6 +29,10 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<Entry> entries = new ArrayList<>();
+
+    @OneToOne
+    private Subscription subscription;
+
 
     public Vehicle(){
 
