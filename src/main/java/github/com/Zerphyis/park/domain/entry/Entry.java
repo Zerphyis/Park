@@ -1,6 +1,7 @@
 package github.com.Zerphyis.park.domain.entry;
 
 import github.com.Zerphyis.park.application.entry.DataEntry;
+import github.com.Zerphyis.park.domain.exit.Exit;
 import github.com.Zerphyis.park.domain.spot.Spot;
 import github.com.Zerphyis.park.domain.vehicle.Vehicle;
 import jakarta.persistence.*;
@@ -25,6 +26,9 @@ public class Entry {
 
     @Column(name = "entrada_data_hora", nullable = false)
     private LocalDateTime entryDateTime;
+
+    @OneToOne
+    private Exit exit;
 
     public Entry() {}
 
