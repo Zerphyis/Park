@@ -44,6 +44,12 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(ExitNotFound.class)
+    public ResponseEntity<ErrorResponse> exitNotFound(ExitNotFound ex) {
+        var error = new ErrorResponse("ExitNotFound", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
     @ExceptionHandler(SubscriptionNotAllowedException.class)
     public ResponseEntity<ErrorResponse> handleSubscriptionNotAllowed(SubscriptionNotAllowedException ex) {
         var error = new ErrorResponse("SubscriptionNotAllowed", ex.getMessage());
