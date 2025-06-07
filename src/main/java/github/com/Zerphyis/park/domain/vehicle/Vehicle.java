@@ -41,6 +41,11 @@ public class Vehicle {
         this.carPlate=data.carPlate();
         this.typeClient=data.typeClient();
     }
+    public Vehicle(Long id, String carPlate, TypeClient typeClient) {
+        this.id = id;
+        this.carPlate = carPlate;
+        this.typeClient = typeClient;
+    }
 
     public Long getId() {
         return id;
