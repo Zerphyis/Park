@@ -15,7 +15,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -67,5 +69,26 @@ class ServiceSubscriptionTest {
         assertDoesNotThrow(() -> service.delete(1L));
         verify(subscriptionRepository).deleteById(1L);
     }
+
+    @Test
+    void deleteSubscription_NotFound() {
+        when(subscriptionRepository.existsById(1L)).thenReturn(false);
+        assertThrows(RuntimeException.class, () -> service.delete(1L));
+    }
+
+    @Test
+    void listAllSubscriptions() {
+        Vehicle vehicle = new Vehicle(1L,"AAA0000", TypeClient.MENSALISTA);
+        Subscription sub = new Subscription(vehicle);
+        sub.setDateStart(LocalDate.now());
+        sub.setDateEnd(LocalDate.now().plusMonths(1));
+
+        when(subscriptionRepository.findAll()).thenReturn(List.of(sub));
+
+        List<DataResponseSubscription> result = service.listAll();
+        assertEquals(1, result.size());
+    }
+
+
 
 }
