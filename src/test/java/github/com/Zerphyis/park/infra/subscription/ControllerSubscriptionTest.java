@@ -1,7 +1,7 @@
 package github.com.Zerphyis.park.infra.subscription;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import github.com.Zerphyis.park.application.exceptions.SubscriptionNotAllowedException;
 import github.com.Zerphyis.park.application.exceptions.VehicleNotFound;
 import github.com.Zerphyis.park.application.subscription.DataRequestSubscription;
 import github.com.Zerphyis.park.application.subscription.DataResponseSubscription;
@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-
 
 import static org.mockito.Mockito.*;
 
@@ -52,6 +51,26 @@ class ControllerSubscriptionTest {
 
         assertThrows(VehicleNotFound.class, () -> controller.create(validRequest));
         verify(service).create(validRequest);
+    }
+
+    @Test
+    void update_ReturnsResponse_WhenServiceSucceeds() {
+        when(service.update(eq(1L), any(DataRequestSubscription.class))).thenReturn(validResponse);
+
+        var response = controller.update(1L, validRequest);
+
+        assertNotNull(response);
+        assertEquals("ABC1234", response.carPlate());
+        verify(service).update(1L, validRequest);
+    }
+
+    @Test
+    void update_ThrowsSubscriptionNotAllowedException_WhenServiceThrows() {
+        when(service.update(eq(1L), any(DataRequestSubscription.class)))
+                .thenThrow(new SubscriptionNotAllowedException("Assinatura não permitida"));
+
+        assertThrows(SubscriptionNotAllowedException.class, () -> controller.update(1L, validRequest));
+        verify(service).update(1L, validRequest);
     }
 
 
