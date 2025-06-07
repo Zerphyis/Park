@@ -5,6 +5,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import github.com.Zerphyis.park.application.payment.DataPaymentRequest;
 import github.com.Zerphyis.park.application.payment.DataPaymentResponse;
+import github.com.Zerphyis.park.domain.payment.Payment;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,28 @@ class ControllerPaymentTest {
         assertEquals(response, result.getBody());
     }
 
+    @Test
+    void listAll_shouldReturnResponseEntityWithListOfPayments() {
+        List<Payment> payments = List.of(mock(Payment.class), mock(Payment.class));
 
+        when(servicePayment.findAll()).thenReturn(payments);
+
+        ResponseEntity<List<Payment>> result = controllerPayment.listAll();
+
+        assertEquals(200, result.getStatusCodeValue());
+        assertEquals(payments, result.getBody());
+    }
+
+    @Test
+    void delete_shouldReturnNoContentResponse() {
+        Long id = 5L;
+
+        doNothing().when(servicePayment).delete(id);
+
+        ResponseEntity<Void> response = controllerPayment.delete(id);
+
+        assertEquals(204, response.getStatusCodeValue());
+        verify(servicePayment).delete(id);
+    }
 
 }
