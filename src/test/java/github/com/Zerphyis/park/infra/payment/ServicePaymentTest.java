@@ -18,6 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ServicePaymentTest {
 
@@ -99,5 +100,31 @@ class ServicePaymentTest {
 
         assertTrue(ex.getMessage().contains("Pagamento com ID 10 não encontrado"));
     }
+
+    @Test
+    void update_shouldThrowExitNotFound_whenExitDoesNotExist() {
+        Payment payment = mock(Payment.class);
+        when(repoPayment.findById(10L)).thenReturn(Optional.of(payment));
+        when(repoExit.findById(1L)).thenReturn(Optional.empty());
+
+        DataPaymentRequest request = new DataPaymentRequest(1L, "PIX", false);
+
+        ExitNotFound ex = assertThrows(ExitNotFound.class, () -> {
+            servicePayment.update(10L, request);
+        });
+
+        assertTrue(ex.getMessage().contains("Exit ID 1 não encontrado"));
+    }
+
+    @Test
+    void delete_shouldDeletePayment_whenPaymentExists() {
+        Payment payment = mock(Payment.class);
+        when(repoPayment.findById(5L)).thenReturn(Optional.of(payment));
+
+        servicePayment.delete(5L);
+
+        verify(repoPayment).delete(payment);
+    }
+
 
 }
