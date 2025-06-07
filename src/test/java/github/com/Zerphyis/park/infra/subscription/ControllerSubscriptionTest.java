@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -90,6 +91,26 @@ class ControllerSubscriptionTest {
         verify(service).delete(1L);
     }
 
+    @Test
+    void listAll_ReturnsList() {
+        when(service.listAll()).thenReturn(List.of(validResponse));
 
+        var list = controller.listAll();
+
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        verify(service).listAll();
+    }
+
+    @Test
+    void expiringSoon_ReturnsList() {
+        when(service.listExpiringSoon()).thenReturn(List.of(validResponse));
+
+        var list = controller.expiringSoon();
+
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        verify(service).listExpiringSoon();
+    }
 
 }
