@@ -73,5 +73,23 @@ class ControllerSubscriptionTest {
         verify(service).update(1L, validRequest);
     }
 
+    @Test
+    void delete_CallsServiceDelete() {
+        doNothing().when(service).delete(1L);
+
+        controller.delete(1L);
+
+        verify(service).delete(1L);
+    }
+
+    @Test
+    void delete_ThrowsRuntimeException_WhenServiceThrows() {
+        doThrow(new RuntimeException("Não encontrado")).when(service).delete(1L);
+
+        assertThrows(RuntimeException.class, () -> controller.delete(1L));
+        verify(service).delete(1L);
+    }
+
+
 
 }
