@@ -1,6 +1,7 @@
 package github.com.Zerphyis.park.infra.subscription;
 
 import static org.junit.jupiter.api.Assertions.*;
+import github.com.Zerphyis.park.application.exceptions.SubscriptionNotAllowedException;
 import github.com.Zerphyis.park.application.exceptions.VehicleNotFound;
 import github.com.Zerphyis.park.application.subscription.DataRequestSubscription;
 import github.com.Zerphyis.park.application.subscription.DataResponseSubscription;
@@ -51,4 +52,20 @@ class ServiceSubscriptionTest {
 
         assertThrows(VehicleNotFound.class, () -> service.create(new DataRequestSubscription(1L)));
     }
+
+    @Test
+    void createSubscription_NotAllowed() {
+        Vehicle vehicle = new Vehicle(1L, "XYZ9999", TypeClient.HORISTA);
+        when(vehicleRepository.findById(1L)).thenReturn(Optional.of(vehicle));
+
+        assertThrows(SubscriptionNotAllowedException.class, () -> service.create(new DataRequestSubscription(1L)));
+    }
+
+    @Test
+    void deleteSubscription_HappyPath() {
+        when(subscriptionRepository.existsById(1L)).thenReturn(true);
+        assertDoesNotThrow(() -> service.delete(1L));
+        verify(subscriptionRepository).deleteById(1L);
+    }
+
 }
