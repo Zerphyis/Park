@@ -81,7 +81,7 @@ class ControllerVehicleTest {
         Vehicle updated = new Vehicle(data);
         updated.setCarPlate("XYZ9999");
 
-        Mockito.when(service.updateveihcle(eq(id), any(DataVehicle.class))).thenReturn(updated);
+        Mockito.when(service.updateVehicle(eq(id), any(DataVehicle.class))).thenReturn(updated);
 
         mockMvc.perform(put("/veiculos?id=" + id)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +95,7 @@ class ControllerVehicleTest {
         Long id = 99L;
         DataVehicle data = new DataVehicle("NOTFOUND", TypeClient.HORISTA);
 
-        Mockito.when(service.updateveihcle(eq(id), any(DataVehicle.class)))
+        Mockito.when(service.updateVehicle(eq(id), any(DataVehicle.class)))
                 .thenThrow(new VehicleNotFound("Veículo não encontrado"));
 
         mockMvc.perform(put("/veiculos?id=" + id)
