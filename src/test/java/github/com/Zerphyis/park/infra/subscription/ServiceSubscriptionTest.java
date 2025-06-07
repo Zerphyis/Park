@@ -89,6 +89,17 @@ class ServiceSubscriptionTest {
         assertEquals(1, result.size());
     }
 
+    @Test
+    void listExpiringSoon() {
+        Vehicle vehicle = new Vehicle(1L, "AAA0000", TypeClient.MENSALISTA);
+        Subscription sub = new Subscription(vehicle);
+        sub.setDateStart(LocalDate.now().minusDays(25));
+        sub.setDateEnd(LocalDate.now().plusDays(3));
 
+        when(subscriptionRepository.findAll()).thenReturn(List.of(sub));
+
+        List<DataResponseSubscription> result = service.listExpiringSoon();
+        assertEquals(1, result.size());
+    }
 
 }
