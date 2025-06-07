@@ -5,6 +5,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import github.com.Zerphyis.park.application.exceptions.ExitNotFound;
 import github.com.Zerphyis.park.application.payment.DataPaymentRequest;
 import github.com.Zerphyis.park.application.payment.DataPaymentResponse;
+import github.com.Zerphyis.park.application.payment.MethodPayment;
 import github.com.Zerphyis.park.domain.exit.Exit;
 import github.com.Zerphyis.park.domain.exit.RepositoryExit;
 import github.com.Zerphyis.park.domain.payment.Payment;
@@ -61,5 +62,42 @@ class ServicePaymentTest {
         assertTrue(thrown.getMessage().contains("saida com id"));
     }
 
+    @Test
+    void update_shouldReturnUpdatedResponse_whenPaymentAndExitExist() {
+        Payment payment = mock(Payment.class);
+        Exit exit = mock(Exit.class);
+
+        when(repoPayment.findById(10L)).thenReturn(Optional.of(payment));
+        when(repoExit.findById(1L)).thenReturn(Optional.of(exit));
+        when(exit.getId()).thenReturn(1L);
+        when(exit.getValueCharged()).thenReturn(70.0);
+
+        DataPaymentRequest request = new DataPaymentRequest(1L, "DINHEIRO", false);
+
+        DataPaymentResponse response = servicePayment.update(10L, request);
+
+        assertEquals(1L, response.exitId());
+        assertEquals(70.0, response.value());
+        assertEquals("DINHEIRO", response.method());
+        assertFalse(response.confirmado());
+
+        verify(payment).setExit(exit);
+        verify(payment).setMethodPayment(MethodPayment.DINHEIRO);
+        verify(payment).setConfirmed(false);
+        verify(repoPayment).save(payment);
+    }
+
+    @Test
+    void update_shouldThrowIllegalArgumentException_whenPaymentNotFound() {
+        when(repoPayment.findById(10L)).thenReturn(Optional.empty());
+
+        DataPaymentRequest request = new DataPaymentRequest(1L, "DINHEIRO", false);
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            servicePayment.update(10L, request);
+        });
+
+        assertTrue(ex.getMessage().contains("Pagamento com ID 10 não encontrado"));
+    }
 
 }
