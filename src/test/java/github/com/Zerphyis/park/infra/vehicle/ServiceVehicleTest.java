@@ -65,7 +65,7 @@ class ServiceVehicleTest {
         when(repository.findById(id)).thenReturn(Optional.of(existingVehicle));
         when(repository.save(existingVehicle)).thenReturn(existingVehicle);
 
-        Vehicle updated = service.updateveihcle(id, data);
+        Vehicle updated = service.updateVehicle(id, data);
 
         assertEquals(data.typeClient(), updated.getTypeClient());
         verify(repository).findById(id);
@@ -80,7 +80,7 @@ class ServiceVehicleTest {
         when(repository.findById(id)).thenReturn(Optional.empty());
 
         VehicleNotFound exception = assertThrows(VehicleNotFound.class, () -> {
-            service.updateveihcle(id, data);
+            service.updateVehicle(id, data);
         });
 
         assertTrue(exception.getMessage().contains("não encontrado"));
