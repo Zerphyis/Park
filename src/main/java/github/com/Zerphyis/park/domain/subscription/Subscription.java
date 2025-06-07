@@ -30,6 +30,13 @@ public class Subscription {
         this.dateEnd=dateStart.plusMonths(1);
 
     }
+    public Subscription(Vehicle vehicle) {
+        this.vehicle = vehicle;
+        this.dateStart = LocalDate.now();
+        this.dateEnd = dateStart.plusMonths(1);
+    }
+
+
     public Long getId() {
         return id;
     }
