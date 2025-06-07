@@ -13,12 +13,12 @@ import github.com.Zerphyis.park.domain.payment.RepositoryPayment;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ServicePaymentTest {
 
@@ -126,5 +126,26 @@ class ServicePaymentTest {
         verify(repoPayment).delete(payment);
     }
 
+    @Test
+    void delete_shouldThrowIllegalArgumentException_whenPaymentNotFound() {
+        when(repoPayment.findById(5L)).thenReturn(Optional.empty());
+
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
+            servicePayment.delete(5L);
+        });
+
+        assertTrue(ex.getMessage().contains("Pagamento com ID 5 não encontrado"));
+    }
+
+    @Test
+    void findAll_shouldReturnListOfPayments() {
+        List<Payment> payments = List.of(mock(Payment.class), mock(Payment.class));
+        when(repoPayment.findAll()).thenReturn(payments);
+
+        List<Payment> result = servicePayment.findAll();
+
+        assertEquals(2, result.size());
+        verify(repoPayment).findAll();
+    }
 
 }
